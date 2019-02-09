@@ -12,7 +12,7 @@ export default class Example extends React.Component {
         },
         {
           name: 'Feb',
-          value: 200
+          value: 250
         },
         {
           name: 'Mar',
@@ -52,8 +52,7 @@ export default class Example extends React.Component {
     while (gridValue <= maxValue) {
       var gridY = Math.round(
         this.state.chartHeight * (1 - gridValue / maxValue)
-      )
-      gridValue += gridScale
+      )                 
       gridLines.push(
         <View
           key={gridValue}
@@ -64,10 +63,11 @@ export default class Example extends React.Component {
           }}
         >
         <View style={{ position : "absolute", bottom: 1, left: -10}}>
-            <Text>{gridY}</Text>
+            <Text>{gridValue}</Text>
           </View>
         </View>
       )
+      gridValue += gridScale;
     }
 
     return gridLines
@@ -113,31 +113,12 @@ export default class Example extends React.Component {
     })
   }
 
-  /*renderYaxisLabel = () => {
-    let maxValue = this.getMaxValue();
-
-    let gridValue = 0
-    let gridScale = 100
-    let yAxisLabels = []
-    while (gridValue <= maxValue) {
-      var gridY = Math.round(
-        this.state.chartHeight * (1 - gridValue / maxValue)
-      )
-      gridValue += gridScale
-      yAxisLabels.push(
-        <View key={gridY} style={{ top: gridY }}><Text>{gridY}</Text></View>
-      )
-    }
-
-    return yAxisLabels
-  }*/
-
   render () {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <View style={{ width: "100%", height: "50%", flexDirection: 'row'
+        <View style={{ width: Math.round(Dimensions.get('window').width), height: "50%", flexDirection: 'row'
             , paddingRight: "10%", paddingLeft: "10%"}}>          
-          <View style={{ width: "90%", height: "100%", flexDirection: 'column-reverse'}}>
+          <View style={{ width: "90%", height: "100%", flexDirection: 'column'}}>
             {this.renderLines()}
             <View style={{ flex: 1, position: 'absolute',flexDirection: 'row', justifyContent: 'flex-end',
             alignItems: 'flex-end'}}>
