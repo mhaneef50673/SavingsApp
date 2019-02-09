@@ -28,17 +28,23 @@ export default class Example extends React.Component {
         }
       ],
       xAxisPadding: 5,
-      chartWidth: Math.round(Dimensions.get('window').width) - 100,
+      chartWidth: Math.round(Dimensions.get('window').width) - 120,
       chartHeight: 300
     }
   }
 
-  renderLines = () => {
+  getMaxValue = () => {
     let maxValue = 0
 
     this.state.data.forEach(element => {
       maxValue = Math.max(maxValue, element.value)
-    })
+    });
+
+    return maxValue;
+  }
+
+  renderLines = () => {
+    let maxValue = this.getMaxValue();
 
     let gridValue = 0
     let gridScale = 100
@@ -46,17 +52,21 @@ export default class Example extends React.Component {
     while (gridValue <= maxValue) {
       var gridY = Math.round(
         this.state.chartHeight * (1 - gridValue / maxValue)
-      )      
+      )
       gridValue += gridScale
       gridLines.push(
         <View
           key={gridValue}
           style={{
             borderBottomColor: 'grey',
-            borderBottomWidth: 0.6,
+            borderBottomWidth: StyleSheet.hairlineWidth,
             top: gridY
           }}
-        />
+        >
+        <View style={{ position : "absolute", bottom: 1, left: -10}}>
+            <Text>{gridY}</Text>
+          </View>
+        </View>
       )
     }
 
@@ -90,35 +100,53 @@ export default class Example extends React.Component {
       )
     })
   }
+
+  renderXaxisLabel = () => {
+    return this.state.data.map((categ, index) => {
+      return (
+        <View key={index} style={{  marginLeft:5, 
+              width : this.state.chartWidth / 5 - this.state.xAxisPadding, 
+              alignItems: "center", justifyContent:"center" }}>
+          <Text style={{ textAlign: 'center'}}>{categ.name}</Text>
+        </View> 
+      )     
+    })
+  }
+
+  /*renderYaxisLabel = () => {
+    let maxValue = this.getMaxValue();
+
+    let gridValue = 0
+    let gridScale = 100
+    let yAxisLabels = []
+    while (gridValue <= maxValue) {
+      var gridY = Math.round(
+        this.state.chartHeight * (1 - gridValue / maxValue)
+      )
+      gridValue += gridScale
+      yAxisLabels.push(
+        <View key={gridY} style={{ top: gridY }}><Text>{gridY}</Text></View>
+      )
+    }
+
+    return yAxisLabels
+  }*/
+
   render () {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <View
-          style={{
-            width: this.state.chartWidth,
-            height: this.state.chartHeight + 100
-          }}
-        >
-          <View style={{ flex: 1, flexDirection: 'column-reverse' }}>
+        <View style={{ width: "100%", height: "50%", flexDirection: 'row'
+            , paddingRight: "10%", paddingLeft: "10%"}}>          
+          <View style={{ width: "90%", height: "100%", flexDirection: 'column-reverse'}}>
             {this.renderLines()}
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                alignItems: 'flex-end'
-              }}
-            >
+            <View style={{ flex: 1, position: 'absolute',flexDirection: 'row', justifyContent: 'flex-end',
+            alignItems: 'flex-end'}}>
               {this.renderBars()}
-            </View>            
-          </View>
-          <View style={{ flexDirection : 'row'}}>
-              <Text style={{ textAlign: 'center', marginLeft: 5, width : this.state.chartWidth / 5 - this.state.xAxisPadding}}>Jan</Text>
-              <Text style={{ textAlign: 'center', marginLeft: 5, width : this.state.chartWidth / 5 - this.state.xAxisPadding}}>Feb</Text>
-              <Text style={{ textAlign: 'center', marginLeft: 5, width : this.state.chartWidth / 5 - this.state.xAxisPadding}}>Mar</Text>
-              <Text style={{ textAlign: 'center', marginLeft: 5, width : this.state.chartWidth / 5 - this.state.xAxisPadding}}>Apr</Text>
-              <Text style={{ textAlign: 'center', marginLeft: 5, width : this.state.chartWidth / 5 - this.state.xAxisPadding}}>May</Text>
-          </View>
+            </View>
+          </View>          
+        </View>
+        <View style={{ width: "80%", height:"5%",  flexDirection : 'row'}}>
+          {this.renderXaxisLabel()}
         </View>
       </View>
     )
