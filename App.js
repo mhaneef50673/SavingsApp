@@ -29,7 +29,7 @@ export default class Example extends React.Component {
       ],
       xAxisPadding: 5,
       chartWidth: Math.round(Dimensions.get('window').width) - 120,
-      chartHeight: 300
+      chartHeight: Math.round(Dimensions.get('window').height)/2
     }
   }
 
@@ -116,7 +116,7 @@ export default class Example extends React.Component {
   render () {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <View style={{ width: Math.round(Dimensions.get('window').width), height: "50%", flexDirection: 'row'
+        <View style={{ width: Math.round(Dimensions.get('window').width), height: this.state.chartHeight, flexDirection: 'row'
             , paddingRight: "10%", paddingLeft: "10%"}}>          
           <View style={{ width: "90%", height: "100%", flexDirection: 'column'}}>
             {this.renderLines()}
