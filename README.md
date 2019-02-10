@@ -14,4 +14,4 @@ Or
 
 # Demo
 
-![demo](https://gfycat.com/scentedsoreasp)
+![demo](https://github.com/mhaneef50673/SavingsApp/blob/master/apk/App%20Demo.mp4)
