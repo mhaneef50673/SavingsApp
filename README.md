@@ -1,7 +1,7 @@
 # SavingsApp
 Savings App
 
-#How to Run
+# How to Run
 
 1. clone the repo
 2. run "npm" install from the project directory
