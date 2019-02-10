@@ -2,7 +2,21 @@ import React from 'react'
 import { View, Text, Dimensions } from 'react-native'
 import styles from '../styles'
 
-const colors = ['#3FE0D0', '#7EF9FF', '#73C2FB', '#57A0D3', '#0080FF']
+const colors = ['#7EF9FF', '#3FE0D0', '#73C2FB', '#57A0D3', '#0080FF']
+const month = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec'
+]
 
 const GridLine = ({ gridValue, gridY }) => {
   return (
@@ -14,7 +28,7 @@ const GridLine = ({ gridValue, gridY }) => {
   )
 }
 
-const Bar = ({ barHeight, barSize, bgColor }) => {  
+const Bar = ({ barHeight, barSize, bgColor }) => {
   return (
     <View
       style={[
@@ -47,7 +61,7 @@ export default class BarChart extends React.Component {
     let maxValue = 0
 
     this.props.data.forEach(element => {
-      maxValue = Math.max(maxValue, element.value)
+      maxValue = Math.max(maxValue, element.node.amount)
     })
 
     return maxValue
@@ -79,24 +93,46 @@ export default class BarChart extends React.Component {
     let maxValue = 0
 
     this.props.data.forEach(element => {
-      maxValue = Math.max(maxValue, element.value)
+      maxValue = Math.max(maxValue, element.node.amount)
     })
 
-    return this.props.data.map((categ, index) => {
+    let prevVal, prevDiff, currVal, currDiff
+    let savingsVelocity = 0
+    let bgColor = null
+    return this.props.data.map((element, index) => {
       const barHeight = Math.round(
-        (this.state.chartHeight * categ.value) / maxValue
+        (this.state.chartHeight * element.node.amount) / maxValue
       )
-      const bgColor = colors[index]
-      return <Bar key={index} bgColor={bgColor} barSize={barSize} barHeight={barHeight} />
+      currVal = element.node.amount
+      currDiff = prevVal != null ? currVal - prevVal : null
+      if ((prevDiff != null) & (currDiff != null)) {
+        savingsVelocity = currDiff - prevDiff
+      }
+      if (savingsVelocity < 0) {
+        bgColor = 'red'
+      } else {
+        bgColor = colors[index]
+      }
+      prevVal = currVal
+      prevDiff = currDiff
+      return (
+        <Bar
+          key={index}
+          bgColor={bgColor}
+          barSize={barSize}
+          barHeight={barHeight}
+        />
+      )
     })
   }
 
   renderXaxisLabel = () => {
-    return this.props.data.map((categ, index) => {
+    return this.props.data.map((element, index) => {
+      const label = month[new Date(element.node.date).getMonth()]
       return (
         <XaxisLabel
           key={index}
-          label={categ.name}
+          label={label}
           chartWidth={this.state.chartWidth}
           xAxisPadding={this.state.xAxisPadding}
         />
