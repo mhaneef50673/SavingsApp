@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'flex-end'
   },
-  barStyle: {    
+  barStyle: {
     marginLeft: 5
   },
   xAxisLabelContainer: { width: '70%', height: '5%', flexDirection: 'row' },
@@ -55,6 +55,19 @@ const styles = StyleSheet.create({
     height: '90%',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  indicatorContainer: {
+    width: '100%',
+    height: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  indicator: { 
+      width: 10, 
+      height: 10, 
+      backgroundColor: 'red', 
+      marginRight: 10 
   }
 })
 

@@ -165,6 +165,10 @@ export default class BarChart extends React.Component {
           <View style={styles.xAxisLabelContainer}>
             {this.renderXaxisLabel()}
           </View>
+          <View style={styles.indicatorContainer}>
+            <View style={styles.indicator} />
+            <Text style={styles.textStyle}>Savings Velocity decrease</Text>
+          </View>
         </View>
       </View>
     )
