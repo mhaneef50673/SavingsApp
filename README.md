@@ -12,3 +12,5 @@ Or
 1. Install the signed apk from "/apk/Savings App.apk" in any device/emulator 
 2. Launch the App
 
+# Demo
+App demo is available in "/apk/App Demo"
