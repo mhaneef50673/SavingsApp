@@ -3,8 +3,7 @@ import { FETCH_DATA } from './actions'
 
 const savingsReducer = (state = Map({}), action) => {
   switch (action.type) {
-    case FETCH_DATA:
-      console.log(action.data)
+    case FETCH_DATA:      
       state = state.set('data', fromJS(action.data))
       return state
     default:

@@ -8,9 +8,7 @@ export class SavingsContainer extends React.Component {
   componentDidMount () {
     this.props.fetchTotalSavings()
   }
-  render () {
-    console.log(this.props.isLoading)
-    console.log(this.props.chartData)
+  render () {    
     return (
       <SavingsComponent
         data={this.props.chartData}
